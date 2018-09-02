@@ -33,7 +33,7 @@ def getWeather():
         result = result.text
     result = json.loads(result)
     result = result['data']
-    return '播报闹钟。现在是%s' % time.strftime("%Y-%m-%d %H:%M", time.localtime()) + '，%s今日温度为%s℃。' % (result['city'], result['wendu'])
+    return '播报闹钟。%s今日%s。' % (result['city'], result['forecast'][1]['low'] + '，' + result['forecast'][1]['high'])
 
 
 def getCourses():
@@ -50,6 +50,10 @@ def getCourses():
     result = json.loads(result)
     data = result['data']
     week = datetime.datetime.now().weekday()
+    if(week == 6):
+        week = 0
+    else:
+        week = week + 1
     courseMode = ''
     if(result['nowWeek'] % 2):
         courseMode = 'single'
