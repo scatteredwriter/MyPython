@@ -11,7 +11,7 @@ def SearchStudent(searchkey):
         print('第%i位：姓名：%s\t年级：%s\t性别：%s\t学号：%s\t班级：%s\t专业：%s\t学院：%s' % (
             i, response['returnData'][i]['xm'], response['returnData'][i]['nj'], response['returnData'][i]['xb'], response['returnData'][i]['xh'], response['returnData'][i]['bj'], response['returnData'][i]['zym'], response['returnData'][i]['yxm']))
     try:
-        choose = input('\n请选择一项进行查询：')
+        choose = input('请选择一项进行查询：')
         if int(choose) > len(response['returnData']) or int(choose) < 0:
             print('输入错误！')
             exit
@@ -33,7 +33,7 @@ def GetCETPhont(studentId):
 
 
 while True:
-    searchkey = input('\n请输入关键字：')
+    searchkey = input('请输入关键字：')
     studentId = SearchStudent(searchkey)
     GetStudentPhoto(studentId)
     GetCETPhont(studentId)
