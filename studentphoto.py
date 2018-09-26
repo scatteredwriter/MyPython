@@ -6,6 +6,7 @@ def SearchStudent(searchkey):
     url = 'http://jwzx.cqu.pt/data/json_StudentSearch.php?searchKey=%s'
     url = url % searchkey
     response = requests.get(url)
+    print(response.text)
     response = json.loads(response.text)
     for i in range(len(response['returnData'])):
         print('第%i位：姓名：%s\t年级：%s\t性别：%s\t学号：%s\t班级：%s\t专业：%s\t学院：%s' % (
@@ -27,7 +28,7 @@ def GetStudentPhoto(studentId):
     print('学生照片：' + url % studentId)
 
 
-def GetCETPhont(studentId):
+def GetCETPhoto(studentId):
     url = 'http://172.22.80.212.cqu.pt/PHOTO0906CET/%s.JPG'
     print('CET照片：' + url % studentId)
 
@@ -36,4 +37,4 @@ while True:
     searchkey = input('请输入关键字：')
     studentId = SearchStudent(searchkey)
     GetStudentPhoto(studentId)
-    GetCETPhont(studentId)
+    GetCETPhoto(studentId)
