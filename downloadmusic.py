@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import platform
 
 
 class Color:
@@ -13,6 +14,9 @@ class Color:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+headers = {
+    'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'
+}
 
 def getMusicList(keyword, p):
     get_url = 'https://c.y.qq.com/soso/fcgi-bin/client_search_cp?new_json=1&aggr=1&cr=1&catZhida=1&p=%d&n=20&w=%s&format=jsonp&inCharset=utf8&outCharset=utf-8'
@@ -79,17 +83,21 @@ def getMusic(music, fileType=None):
 def downloadFile(music, musicInfo):
     music_url = musicInfo[0]
     musicImg_url = musicInfo[1]
-    musicFile_base_url = os.path.join('~', 'Music')
-    musicImgFile_base_url = os.path.join('~', 'Pictures')
+    musicFile_base_url = ''
+    musicImgFile_base_url = ''
+    if platform.system() == 'Windows':
+        musicFile_base_url = os.path.expanduser('~/Music')
+        musicImgFile_base_url = os.path.expanduser('~/Pictures')
+    else:
+        musicFile_base_url = os.path.expanduser('~/Music')
+        musicImgFile_base_url = os.path.expanduser('~/Pictures')
 
     musicFile_url = os.path.join(musicFile_base_url, (
         '%s - %s.mp3' % (music['singerName'], music['songName'])))
-    musicFile_url = os.path.expanduser(musicFile_url)
     musicImgFile_url = os.path.join(musicImgFile_base_url, (
         '%s - %s.jpg' % (music['singerName'], music['albumName'])))
-    musicImgFile_url = os.path.expanduser(musicImgFile_url)
 
-    _file = requests.get(music_url)
+    _file = requests.get(music_url, headers=headers)
     if _file.status_code is not 200:
         return False
     with open(musicFile_url, 'wb') as code:
