@@ -58,8 +58,8 @@ def getVkey(songMid, mediaMid=None):
 
 def getMusic(music, fileType=None):
     typeList = [
-        'M800',
         'M500',
+        'M800',
     ]
     if fileType is None:
         fileType = typeList[0]
